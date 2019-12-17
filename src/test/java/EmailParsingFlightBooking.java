@@ -37,6 +37,7 @@ public class EmailParsingFlightBooking extends BaseTest {
     By moreButton = By.xpath("//div[@class='T-I J-J5-Ji T-I-Js-Gs aap T-I-awG T-I-ax7 L3']");
     By forwardButton = By.xpath("//img[@class='mI f4 J-N-JX']");
     By emailConfirmationNumber = By.xpath("//*[@class = 'I5']//strong[contains(text(),'VFENWP')]/parent::span");
+    By sendToField = By.xpath("//*[@class='IG']");
 
 
     @Test
@@ -58,6 +59,8 @@ public class EmailParsingFlightBooking extends BaseTest {
         this.driver.findElement(moreButton).click();
         wait.until(ExpectedConditions.elementToBeClickable(forwardButton));
         this.driver.findElement(forwardButton).click();
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(sendToField));
+        this.driver.findElement(sendToField).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(emailConfirmationNumber));
         actions.moveToElement(driver.findElement(emailConfirmationNumber));
         this.driver.findElement(emailConfirmationNumber).click();
