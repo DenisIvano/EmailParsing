@@ -1,5 +1,6 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -38,11 +39,13 @@ public class EmailParsingFlightBooking extends BaseTest {
     By forwardButton = By.xpath("//img[@class='mI f4 J-N-JX']");
     By emailConfirmationNumber = By.xpath("//*[@class = 'I5']//strong[contains(text(),'VFENWP')]/parent::span");
     By sendToField = By.xpath("//*[@class='IG']");
+    By emptyField = By.xpath("//div[@class='Eg KzhQXc a-E WopYHf aZzjbc']");
 
 
     @Test
     public void firstTest() throws InterruptedException {
         Actions actions = new Actions(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, 120);
         this.driver.get("https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox");
         this.driver.findElement(emailInput).sendKeys("testemailparsing22@gmail.com");
@@ -59,14 +62,23 @@ public class EmailParsingFlightBooking extends BaseTest {
         this.driver.findElement(moreButton).click();
         wait.until(ExpectedConditions.elementToBeClickable(forwardButton));
         this.driver.findElement(forwardButton).click();
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(sendToField));
+//        wait.until(ExpectedConditions.elementToBeClickable(sendToField));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(sendToField));
         this.driver.findElement(sendToField).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(emailConfirmationNumber));
-        actions.moveToElement(driver.findElement(emailConfirmationNumber));
+//        this.driver.findElement(sendToField).sendKeys("lala");
+        wait.until(ExpectedConditions.presenceOfElementLocated(emailConfirmationNumber));
+//        this.driver.findElement(emptyField).click();
+//        Thread.sleep(2000);
+       // js.executeScript("window.scrollBy(0,1500)");
+       // js.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(emailConfirmationNumber));
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", driver.findElement(emailConfirmationNumber));
+        // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+//        actions.moveToElement(driver.findElement(emailConfirmationNumber));
         this.driver.findElement(emailConfirmationNumber).click();
         robot.keyPress(KeyEvent.VK_Q);
-        this.driver.findElement(emailConfirmationNumber).clear();
-
+        Thread.sleep(2000);
+//        this.driver.findElement(emailConfirmationNumber).clear();
+//
 
 
 //        try {
