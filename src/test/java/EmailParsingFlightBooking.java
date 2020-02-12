@@ -1,6 +1,8 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,6 +32,8 @@ public class EmailParsingFlightBooking extends BaseTest {
     long time = date.getTime();
     String timeStamp = Long.toString(time);
 
+
+
     By emailInput = By.xpath("//input[@id ='identifierId']");
     By nextButton = By.xpath("//span[@class ='RveJvd snByac']");
     By passwordInput = By.xpath("//input[@type='password']");
@@ -38,8 +42,10 @@ public class EmailParsingFlightBooking extends BaseTest {
     By moreButton = By.xpath("//div[@class='T-I J-J5-Ji T-I-Js-Gs aap T-I-awG T-I-ax7 L3']");
     By forwardButton = By.xpath("//img[@class='mI f4 J-N-JX']");
     By emailConfirmationNumber = By.xpath("//*[@class = 'I5']//strong[contains(text(),'VFENWP')]/parent::span");
-    By sendToField = By.xpath("//*[@class='IG']");
+    By sendToField = By.xpath("//*[@name='to']");
     By emptyField = By.xpath("//div[@class='aC3']");
+    By sendButton = By.xpath("//div[@class='dC']/div[1]");
+
 
 
     @Test
@@ -63,44 +69,22 @@ public class EmailParsingFlightBooking extends BaseTest {
         this.driver.findElement(moreButton).click();
         wait.until(ExpectedConditions.elementToBeClickable(forwardButton));
         this.driver.findElement(forwardButton).click();
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(sendToField));
-//        this.driver.findElement(sendToField).click();
+        wait.until(ExpectedConditions.elementToBeClickable(sendToField));
+        this.driver.findElement(sendToField).sendKeys("bookings-dev@tripactions.nom.co");
         wait.until(ExpectedConditions.elementToBeClickable(emptyField));
         this.driver.findElement(emptyField).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(emailConfirmationNumber));
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", driver.findElement(emailConfirmationNumber));
-//        wait.until(ExpectedConditions.presenceOfElementLocated(emptyField));
-        this.driver.findElement(emailConfirmationNumber).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(emailConfirmationNumber));
+        this.driver.findElement(emailConfirmationNumber).sendKeys(timeStamp);
+        wait.until(ExpectedConditions.elementToBeClickable(sendButton));
+//        this.driver.findElement(sendButton).click();
+//        this.driver.findElement(emailConfirmationNumber).sendKeys(Keys.chord(Keys.COMMAND,Keys.ENTER));
 
-        StringSelection string = new StringSelection(timeStamp);
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(string, null);
-//
-//        robot.keyPress(KeyEvent.VK_META);
-//        robot.keyPress(KeyEvent.VK_V);
-        robot.keyRelease(KeyEvent.VK_META);
-        robot.keyPress(KeyEvent.VK_V);
 
-//        robot.keyPress(KeyEvent.VK_Q);
+
         Thread.sleep(2000);
-//
-
-
-//        try {
-//            this.driver.findElement(emailInLabel).click();
-//        } catch (Throwable e) {
-//            System.out.println("error");
-//        }
-
-
-        //        Thread.sleep(5000);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(emailInLabel));
-//        WebElement emailInLabel = driver.findElement(By.xpath("//*[@jscontroller='ZdOxDb']"));
-//        wait.until(ExpectedConditions.elementToBeClickable(emailInLabel));
-//        actions.contextClick(emailInLabel).perform();
-
-
-
-
+        System.out.println(timeStamp);
 
 
 
