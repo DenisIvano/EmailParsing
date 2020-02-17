@@ -1,32 +1,13 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
-
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.assertTrue;
 
 public class EmailParsingFlightBooking extends BaseTest {
-    Robot robot;
-
-    {
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-    }
 
     Date date = new Date();
     long time = date.getTime();
@@ -44,14 +25,24 @@ public class EmailParsingFlightBooking extends BaseTest {
     By emailConfirmationNumber = By.xpath("//*[@class = 'I5']//strong[contains(text(),'VFENWP')]/parent::span");
     By sendToField = By.xpath("//*[@name='to']");
     By emptyField = By.xpath("//div[@class='aC3']");
-    By sendButton = By.xpath("//div[@class='dC']/div[1]");
+    By emailBody = By.xpath("//div[@aria-label='Message Body']");
+    By typeToResponse = By.xpath("//div[@class='J-JN-M-I J-J5-Ji Un L3']");
+    By editSubject = By.xpath("//*[@class='J-N-Jz' and contains(text(),'Edit subject')]");
+    By subjectBox = By.xpath("//input[@name='subjectbox']");
+
+
+    By emailTA = By.xpath("//input[@id ='userEmail']");
+    By continueTA = By.xpath("//button[@ng-click='$ctrl.onContinue()']");
+    By passwordTA = By.xpath("//input[@id ='userPassword']");
+    By signInTA = By.xpath("//button[@ng-click='$ctrl.onLogin()']");
+
+
+
 
 
 
     @Test
     public void firstTest() throws InterruptedException {
-        Actions actions = new Actions(driver);
-        SystemClipboard system = new SystemClipboard();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, 120);
         this.driver.get("https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox");
@@ -77,14 +68,39 @@ public class EmailParsingFlightBooking extends BaseTest {
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", driver.findElement(emailConfirmationNumber));
         wait.until(ExpectedConditions.presenceOfElementLocated(emailConfirmationNumber));
         this.driver.findElement(emailConfirmationNumber).sendKeys(timeStamp);
-        wait.until(ExpectedConditions.elementToBeClickable(sendButton));
-//        this.driver.findElement(sendButton).click();
-//        this.driver.findElement(emailConfirmationNumber).sendKeys(Keys.chord(Keys.COMMAND,Keys.ENTER));
-
-
+        wait.until(ExpectedConditions.elementToBeClickable(typeToResponse));
+        this.driver.findElement(typeToResponse).click();
+        wait.until(ExpectedConditions.elementToBeClickable(editSubject));
+        this.driver.findElement(editSubject).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subjectBox));
+        this.driver.findElement(subjectBox).click();
+        this.driver.findElement(subjectBox).sendKeys(timeStamp);
+        driver.findElement(emailBody).sendKeys(Keys.COMMAND, Keys.ENTER);
 
         Thread.sleep(2000);
         System.out.println(timeStamp);
+
+
+
+    }
+
+    @Test
+    public void findTABooking() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 120);
+        this.driver.get("http://ext-demo.k8s-dev.local/");
+        wait.until(ExpectedConditions.elementToBeClickable(emailTA));
+        this.driver.findElement(emailTA).sendKeys("testemailparsing22@gmail.com");
+        wait.until(ExpectedConditions.elementToBeClickable(continueTA));
+        this.driver.findElement(continueTA).click();
+        wait.until(ExpectedConditions.elementToBeClickable(passwordTA));
+        this.driver.findElement(passwordTA).sendKeys("wHaguexv098");
+        wait.until(ExpectedConditions.elementToBeClickable(signInTA));
+        this.driver.findElement(signInTA).click();
+
+
+
+
+
 
 
 
