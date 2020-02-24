@@ -3,7 +3,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.util.Date;
 
 
@@ -12,7 +14,7 @@ public class EmailParsingFlightBooking extends BaseTest {
     Date date = new Date();
     long time = date.getTime();
     String timeStamp = Long.toString(time);
-
+    String bookingConfTA = "VFENWP" + timeStamp;
 
 
     By emailInput = By.xpath("//input[@id ='identifierId']");
@@ -24,7 +26,7 @@ public class EmailParsingFlightBooking extends BaseTest {
     By forwardButton = By.xpath("//img[@class='mI f4 J-N-JX']");
     By emailConfirmationNumber = By.xpath("//*[@class = 'I5']//strong[contains(text(),'VFENWP')]/parent::span");
     By sendToField = By.xpath("//*[@name='to']");
-    By emptyField = By.xpath("//div[@class='aC3']");
+    By emptyField = By.xpath("//div[@class='gs']");
     By emailBody = By.xpath("//div[@aria-label='Message Body']");
     By typeToResponse = By.xpath("//div[@class='J-JN-M-I J-J5-Ji Un L3']");
     By editSubject = By.xpath("//*[@class='J-N-Jz' and contains(text(),'Edit subject')]");
@@ -35,10 +37,11 @@ public class EmailParsingFlightBooking extends BaseTest {
     By continueTA = By.xpath("//button[@ng-click='$ctrl.onContinue()']");
     By passwordTA = By.xpath("//input[@id ='userPassword']");
     By signInTA = By.xpath("//button[@ng-click='$ctrl.onLogin()']");
-
-
-
-
+    By taMore = By.xpath("//div[@class='ta-main-header-menu-handle flex-row-centerY dropdown-toggle']");
+    By superAdmin = By.xpath("//li/a[@href='/app/superAdmin']");
+    By bookingsTA = By.xpath("//a[@href='bookings']");
+    By searchBooking = By.xpath("//input[@data-ng-model='filter.search']");
+    By confSuperadmin = By.xpath("//span[text()='" + bookingConfTA + "']");
 
 
     @Test
@@ -77,16 +80,8 @@ public class EmailParsingFlightBooking extends BaseTest {
         this.driver.findElement(subjectBox).sendKeys(timeStamp);
         driver.findElement(emailBody).sendKeys(Keys.COMMAND, Keys.ENTER);
 
-        Thread.sleep(2000);
-        System.out.println(timeStamp);
+        Thread.sleep(3000);
 
-
-
-    }
-
-    @Test
-    public void findTABooking() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 120);
         this.driver.get("http://ext-demo.k8s-dev.local/");
         wait.until(ExpectedConditions.elementToBeClickable(emailTA));
         this.driver.findElement(emailTA).sendKeys("testemailparsing22@gmail.com");
@@ -96,14 +91,42 @@ public class EmailParsingFlightBooking extends BaseTest {
         this.driver.findElement(passwordTA).sendKeys("wHaguexv098");
         wait.until(ExpectedConditions.elementToBeClickable(signInTA));
         this.driver.findElement(signInTA).click();
+        wait.until(ExpectedConditions.elementToBeClickable(taMore));
+        this.driver.findElement(taMore).click();
+        wait.until(ExpectedConditions.elementToBeClickable(superAdmin));
+        this.driver.findElement(superAdmin).click();
+        wait.until(ExpectedConditions.elementToBeClickable(bookingsTA));
+        this.driver.findElement(bookingsTA).click();
+        wait.until(ExpectedConditions.elementToBeClickable(searchBooking));
+//        this.driver.findElement(searchBooking).sendKeys(bookingConfTA);
+        for (int i = 0; i < 20; i++) {
+            this.driver.findElement(searchBooking).sendKeys(bookingConfTA);
+            if (isElementDisplayed(confSuperadmin)) {
+                this.driver.findElement(confSuperadmin).isDisplayed();
+                break;
+            } else {
+                this.driver.findElement(searchBooking).clear();
+                Thread.sleep(1000);
+            }
+        }
+        Assert.assertTrue(this.driver.findElement(confSuperadmin).isDisplayed());
 
-
-
-
-
-
+        Thread.sleep(5000);
 
 
     }
-
 }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+

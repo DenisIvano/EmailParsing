@@ -1,7 +1,9 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
@@ -34,4 +36,23 @@ public class BaseTest {
         driver.quit();
     }
 
+
+
+    protected boolean isElementDisplayed(By by) {
+        boolean isDisplayed = true;
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 3);
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            System.out.println("isDisplayed is true for element");
+        } catch (TimeoutException e) {
+            isDisplayed = false;
+        }
+        return isDisplayed;
+    }
 }
+
+
+
+
+
+
