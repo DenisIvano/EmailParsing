@@ -54,26 +54,10 @@ public class EmailParsingFlightBooking extends BaseTest {
         gmail.changeConfirmationNumber();
         gmail.changeSubject();
         gmail.sendEmail();
+        TripActionsLogin.loginToTripActions("testemailparsing22@gmail.com", "wHaguexv098");
 
 
 
-
-////ForwardEmail
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(flightBookingLabel)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(emailInLabel)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(moreButton)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(forwardButton)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(sendToField)).sendKeys("bookings-dev@tripactions.nom.co");
-//        wait.until(ExpectedConditions.elementToBeClickable(emptyField)).click();
-//        wait.until(ExpectedConditions.presenceOfElementLocated(emailConfirmationNumber));
-//        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", driver.findElement(emailConfirmationNumber));
-//        wait.until(ExpectedConditions.presenceOfElementLocated(emailConfirmationNumber)).sendKeys(timeStamp);
-//        wait.until(ExpectedConditions.elementToBeClickable(typeToResponse)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(editSubject)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(subjectBox)).sendKeys(timeStamp);
-//        this.driver.findElement(emailBody).sendKeys(Keys.COMMAND, Keys.ENTER);
-//
-//        Thread.sleep(3000);
 ////LoginToTA
 //        this.driver.get("http://ext-demo.k8s-dev.local/");
 //        wait.until(ExpectedConditions.elementToBeClickable(emailTA)).sendKeys("testemailparsing22@gmail.com");

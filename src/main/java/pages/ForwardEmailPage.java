@@ -32,20 +32,6 @@ public class ForwardEmailPage extends CommonTest{
     By subjectBox = By.xpath("//input[@name='subjectbox']");
 
 
-    ////ForwardEmail
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(flightBookingLabel)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(emailInLabel)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(moreButton)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(forwardButton)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(sendToField)).sendKeys("bookings-dev@tripactions.nom.co");
-//        wait.until(ExpectedConditions.elementToBeClickable(emptyField)).click();
-//        wait.until(ExpectedConditions.presenceOfElementLocated(emailConfirmationNumber));
-//        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", driver.findElement(emailConfirmationNumber));
-//        wait.until(ExpectedConditions.presenceOfElementLocated(emailConfirmationNumber)).sendKeys(timeStamp);
-//        wait.until(ExpectedConditions.elementToBeClickable(typeToResponse)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(editSubject)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(subjectBox)).sendKeys(timeStamp);
-//        this.driver.findElement(emailBody).sendKeys(Keys.COMMAND, Keys.ENTER);
 
     public void selectFlightLabel() {
         commonTest.click(flightBookingLabel);
