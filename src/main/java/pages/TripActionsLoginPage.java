@@ -21,12 +21,7 @@ public class TripActionsLoginPage {
     By passwordTA = By.xpath("//input[@id ='userPassword']");
     By signInTA = By.xpath("//button[@ng-click='$ctrl.onLogin()']");
 
-    ////LoginToTA
-//        this.driver.get("http://ext-demo.k8s-dev.local/");
-//        wait.until(ExpectedConditions.elementToBeClickable(emailTA)).sendKeys("testemailparsing22@gmail.com");
-//        wait.until(ExpectedConditions.elementToBeClickable(continueTA)).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(passwordTA)).sendKeys("wHaguexv098");
-//        wait.until(ExpectedConditions.elementToBeClickable(signInTA)).click();
+
 
     public void loginToTripActions(String login, String password) {
         commonTest.open("http://ext-demo.k8s-dev.local/");

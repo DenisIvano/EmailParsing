@@ -2,7 +2,6 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import utils.BaseTest;
 import utils.WebDriverFactory;
 
 public class LoginGooglePage {

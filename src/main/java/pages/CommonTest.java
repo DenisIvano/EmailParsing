@@ -1,22 +1,18 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.BaseTest;
 
 import java.util.Date;
 
 
 public class CommonTest {
 
-    Date date = new Date();
-    long time = date.getTime();
-    String timeStamp = Long.toString(time);
-    String bookingConfTA = "VFENWP" + timeStamp;
+    static Date date = new Date();
+    static long time = date.getTime();
+    static String timeStamp = Long.toString(time);
+    static String bookingConfTA = "VFENWP" + timeStamp;
 
     WebDriver driver;
 
@@ -25,6 +21,17 @@ public class CommonTest {
     }
 
     public CommonTest() {
+    }
+    protected boolean isElementDisplayed(By by) {
+        boolean isDisplayed = true;
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 3);
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            System.out.println("isDisplayed is true for element");
+        } catch (TimeoutException e) {
+            isDisplayed = false;
+        }
+        return isDisplayed;
     }
 
     public void open(String link){
