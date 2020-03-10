@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utils.BaseTest;
 import utils.WebDriverFactory;
 
 public class LoginGooglePage {
@@ -23,6 +24,7 @@ public class LoginGooglePage {
         commonTest.click(nextButton);
         commonTest.sendKeys(passwordInput, password);
         commonTest.click(nextButton);
+
     }
 
 }
